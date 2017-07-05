@@ -3,6 +3,7 @@ var router = express.Router()
 var User = require('./models/user.js')
 var Questionaire = require('./models/questionaire.js')
 var News = require('./models/news.js')
+var BannersNews = require('./models/bannersNews')
 var sha1 = require('sha1')
 //路由决定了由谁去响应客户端请求，在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST请求
 // 注册
@@ -239,26 +240,6 @@ router.get('/getAllByUser', (req, res, next) => {
             })
         })
 })
-//获取资讯数据
-router.get('/getNews', (req, res, next) => {
-  res.json({
-    test: '试试'
-  })
-  // News
-  //     .all()
-  //     .then((data) => {
-  //         res.json({
-  //             code: 0,
-  //             news: data[0].news,
-  //             test: '试试'
-  //         })
-  //     })
-  //     .catch(() => {
-  //         res.json({
-  //             code: 1
-  //         })
-  //     })
-})
 // 删除问卷
 router.post('/delete', (req, res, next) => {
     var idArr = req.body.idArr
@@ -275,5 +256,33 @@ router.post('/delete', (req, res, next) => {
             })
         })
 })
-
+//获取资讯轮播图片数据
+router.get('/getBannersNews', (req, res, next) => {
+  BannersNews
+      .all()
+      .then((list) => {
+          res.json({
+              code: 0,
+              bannersNews: list
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1
+          })
+      })
+  // res.json([{
+  //   id: 1,
+  // 	title: "我们一起赢",
+  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499222131/1499222131.jpg?_r=1499222132",
+  // }, {
+  //   id: 2,
+  // 	title: "王者决战",
+  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499073753/1499073753.jpg?_r=1499222132",
+  // },{
+  //   id: 3,
+  // 	title: "明星赛直播",
+  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499221833/1499221833.jpg?_r=1499222132",
+  // }]);
+})
 module.exports = router

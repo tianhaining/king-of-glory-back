@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var User = require('./models/user.js')
 var Questionaire = require('./models/questionaire.js')
+
 var News = require('./models/news.js')
 var BannersNews = require('./models/bannersNews')
 var sha1 = require('sha1')
@@ -256,6 +257,23 @@ router.post('/delete', (req, res, next) => {
             })
         })
 })
+//保存资讯数据
+router.post('/saveNews', (req, res, next) => {
+    News
+      .save(req.body)
+      .then(() => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+            res.json({
+                code: 1,
+                message: '发送失败'
+            })
+        })
+})
 //获取资讯轮播图片数据
 router.get('/getBannersNews', (req, res, next) => {
   BannersNews
@@ -271,18 +289,21 @@ router.get('/getBannersNews', (req, res, next) => {
               code: 1
           })
       })
-  // res.json([{
-  //   id: 1,
-  // 	title: "我们一起赢",
-  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499222131/1499222131.jpg?_r=1499222132",
-  // }, {
-  //   id: 2,
-  // 	title: "王者决战",
-  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499073753/1499073753.jpg?_r=1499222132",
-  // },{
-  //   id: 3,
-  // 	title: "明星赛直播",
-  // 	image_url_big: "http://ossweb-img.qq.com/upload/adw/image/1499221833/1499221833.jpg?_r=1499222132",
-  // }]);
+})
+//获取资讯数据
+router.get('/getNews', (req, res, next) => {
+    News
+      .all()
+      .then((list) => {
+          res.json({
+              code: 0,
+              news: list
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1
+          })
+      })
 })
 module.exports = router

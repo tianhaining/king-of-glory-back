@@ -2,10 +2,12 @@ var express = require('express')
 var router = express.Router()
 var User = require('./models/user.js')
 var Questionaire = require('./models/questionaire.js')
+var sha1 = require('sha1')
 
+//TODO king-of-glory
 var News = require('./models/news.js')
 var BannersNews = require('./models/bannersNews')
-var sha1 = require('sha1')
+var TanksList = require('./models/tanksList')
 //路由决定了由谁去响应客户端请求，在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST请求
 // 注册
 router.post('/register', (req, res, next) => {
@@ -257,6 +259,9 @@ router.post('/delete', (req, res, next) => {
             })
         })
 })
+
+//TODO king-of-glory
+
 //保存资讯数据
 router.post('/saveNews', (req, res, next) => {
     News
@@ -305,5 +310,38 @@ router.get('/getNews', (req, res, next) => {
               code: 1
           })
       })
+})
+//保存坦克列表信息
+router.post('/saveTanksList', (req, res, next) => {
+    TanksList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取坦克列表信息
+router.get('/getTanksList', (req, res, next) => {
+    TanksList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          tanksList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
 })
 module.exports = router

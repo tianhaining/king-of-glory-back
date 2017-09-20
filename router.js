@@ -8,6 +8,11 @@ var sha1 = require('sha1')
 var News = require('./models/news.js')
 var BannersNews = require('./models/bannersNews')
 var TanksList = require('./models/tanksList')
+var WarriorList = require('./models/warriorList')
+var WizardList = require('./models/wizardList')
+var ShooterList = require('./models/shooterList')
+var AssassinList = require('./models/assassinList')
+var AssistList = require('./models/assistList')
 //路由决定了由谁去响应客户端请求，在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST请求
 // 注册
 router.post('/register', (req, res, next) => {
@@ -336,6 +341,171 @@ router.get('/getTanksList', (req, res, next) => {
         res.json({
           code: 0,
           tanksList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+//TODO 保存战士列表信息
+router.post('/saveWarriorList', (req, res, next) => {
+    WarriorList
+    .save(req.body)
+    .then((list) => {
+      res.json({
+        code: 0,
+        message: '发送成功'
+      })
+    })
+    .catch(() => {
+      res.json({
+        code: 1,
+        message: '发送失败'
+      })
+    })
+})
+//TODO 获取战士列表信息
+router.get('/getWarriorList', (req, res, next) => {
+  WarriorList
+  .all()
+  .then((list) => {
+    res.json({
+      code: 0,
+      warriorList: list
+    })
+  })
+  .catch(() => {
+    res.json({
+      code: 1
+    })
+  })
+})
+//保存法师列表信息
+router.post('/saveWizardList', (req, res, next) => {
+    WizardList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取法师列表信息
+router.get('/getWizardList', (req, res, next) => {
+    WizardList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          wizardList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+//保存射手列表信息
+router.post('/saveShooterList', (req, res, next) => {
+    ShooterList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取射手列表信息
+router.get('/getShooterList', (req, res, next) => {
+    ShooterList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          shooterList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+//保存刺客列表信息
+router.post('/saveAssassinList', (req, res, next) => {
+    AssassinList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取刺客列表信息
+router.get('/getAssassinList', (req, res, next) => {
+    AssassinList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          assassinList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+//保存辅助列表信息
+router.post('/saveAssistList', (req, res, next) => {
+    AssistList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取辅助列表信息
+router.get('/getAssistList', (req, res, next) => {
+    AssistList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          assistList: list
         })
     })
     .catch(() => {

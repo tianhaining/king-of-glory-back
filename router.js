@@ -13,6 +13,9 @@ var WizardList = require('./models/wizardList')
 var ShooterList = require('./models/shooterList')
 var AssassinList = require('./models/assassinList')
 var AssistList = require('./models/assistList')
+
+var HeroInfo = require('./models/heroInfo')//英雄介绍
+var SkillPlus = require('./models/skillPlus')//技能加点
 //路由决定了由谁去响应客户端请求，在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST请求
 // 注册
 router.post('/register', (req, res, next) => {
@@ -481,6 +484,23 @@ router.get('/getAssassinList', (req, res, next) => {
         })
     })
 })
+//删除刺客信息列表
+router.get('/deleteAllAssassinList', (req, res, next) => {
+    AssassinList
+        .deleteAll()
+        .then((data) => {
+            res.json({
+                code: 0,
+                message: '删除成功'
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1,
+                message: '删除失败'
+            })
+        })
+})
 //保存辅助列表信息
 router.post('/saveAssistList', (req, res, next) => {
     AssistList
@@ -513,5 +533,107 @@ router.get('/getAssistList', (req, res, next) => {
           code: 1
         })
     })
+})
+//保存英雄介绍信息
+router.post('/saveHeroInfo', (req, res, next) => {
+    HeroInfo
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//根据英雄名称获取英雄介绍
+router.get('/getHeroInfoByName', (req, res, next) => {
+    var name = req.query.name
+    HeroInfo
+        .getHeroInfo(name)
+        .then((data) => {
+            res.json({
+                code: 0,
+                heroInfo: data
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1
+            })
+        })
+})
+//删除英雄介绍
+router.get('/deleteAllHeroInfo', (req, res, next) => {
+    HeroInfo
+        .deleteAll()
+        .then((data) => {
+            res.json({
+                code: 0,
+                message: '删除成功'
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1,
+                message: '删除失败'
+            })
+        })
+})
+//保存技能加点信息
+router.post('/saveSkillPlus', (req, res, next) => {
+    SkillPlus
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//根据英雄名称获取技能加点
+router.get('/getSkillPlusByName', (req, res, next) => {
+    var name = req.query.name
+    SkillPlus
+        .getSkillPlusByName(name)
+        .then((data) => {
+            res.json({
+                code: 0,
+                skillPlus: data
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1
+            })
+        })
+})
+//删除技能加点
+router.get('/deleteAllSkillPlus', (req, res, next) => {
+    SkillPlus
+        .deleteAll()
+        .then((data) => {
+            res.json({
+                code: 0,
+                message: '删除成功'
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1,
+                message: '删除失败'
+            })
+        })
 })
 module.exports = router

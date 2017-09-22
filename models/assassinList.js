@@ -6,5 +6,8 @@ module.exports = {
   },
   all: () => {
     return AssassinList.find().exec();
+  },
+  deleteAll: () => {
+    return AssassinList.remove();
   }
 }

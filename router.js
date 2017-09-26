@@ -16,6 +16,14 @@ var AssistList = require('./models/assistList')
 
 var HeroInfo = require('./models/heroInfo')//英雄介绍
 var SkillPlus = require('./models/skillPlus')//技能加点
+var HeroUseSkill = require('./models/heroUseSkill')//使用技巧
+
+var StrategyBannerNew = require('./models/strategyBannerNew')//策略轮播图片信息
+var StrategyVideoList = require('./models/strategyVideoList')//策略视频列表信息
+var StrategyDataList = require('./models/strategyDataList')//策略图文策略
+var VideoPlayDataList = require('./models/videoPlayDataList')//策略视频信息
+
+var GameNewsList = require('./models/gameNewsList')//赛事信息
 //路由决定了由谁去响应客户端请求，在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST请求
 // 注册
 router.post('/register', (req, res, next) => {
@@ -635,5 +643,244 @@ router.get('/deleteAllSkillPlus', (req, res, next) => {
                 message: '删除失败'
             })
         })
+})
+//保存使用技巧信息
+router.post('/saveHeroUseSkill', (req, res, next) => {
+    HeroUseSkill
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//根据英雄名称获取使用技巧
+router.get('/getHeroUseSkillByName', (req, res, next) => {
+    var name = req.query.name
+    HeroUseSkill
+        .getHeroUseSkillByName(name)
+        .then((data) => {
+            res.json({
+                code: 0,
+                heroUseSkill: data
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1
+            })
+        })
+})
+//删除使用技巧
+router.get('/deleteAllHeroUseSkill', (req, res, next) => {
+    HeroUseSkill
+        .deleteAll()
+        .then((data) => {
+            res.json({
+                code: 0,
+                message: '删除成功'
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1,
+                message: '删除失败'
+            })
+        })
+})
+
+//保存策略轮播图片信息
+router.post('/saveStrategyBannerNew', (req, res, next) => {
+    StrategyBannerNew
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取策略轮播图片信息
+router.get('/getStrategyBannerNew', (req, res, next) => {
+    StrategyBannerNew
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          strategyBannerNew: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+
+//保存策略视频列表信息
+router.post('/saveStrategyVideoList', (req, res, next) => {
+    StrategyVideoList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取策略视频列表信息
+router.get('/getStrategyVideoList', (req, res, next) => {
+    StrategyVideoList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          strategyVideoList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+
+//TODO 保存策略图文策略信息
+router.post('/saveStrategyDataList', (req, res, next) => {
+    StrategyDataList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//获取策略图文策略信息
+router.get('/getStrategyDataList', (req, res, next) => {
+    StrategyDataList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          strategyDataList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
+})
+
+//TODO 保存视频信息
+router.post('/saveVideoPlayDataList', (req, res, next) => {
+    VideoPlayDataList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//TODO 根据index获取视频信息
+router.get('/getVideoPlayDataListByIndex', (req, res, next) => {
+    var index = req.query.index
+    VideoPlayDataList
+        .getVideoPlayDataListByIndex(index)
+        .then((data) => {
+            res.json({
+                code: 0,
+                videoPlayData: data
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1
+            })
+        })
+})
+//TODO 删除所有视频信息
+router.get('/deleteAllVideoPlayDataList', (req, res, next) => {
+    VideoPlayDataList
+        .deleteAll()
+        .then((data) => {
+            res.json({
+                code: 0,
+                message: '删除成功'
+            })
+        })
+        .catch(() => {
+            res.json({
+                code: 1,
+                message: '删除失败'
+            })
+        })
+})
+
+//TODO 保存赛事信息
+router.post('/saveGameNewsList', (req, res, next) => {
+    GameNewsList
+      .save(req.body)
+      .then((list) => {
+          res.json({
+              code: 0,
+              message: '发送成功'
+          })
+      })
+      .catch(() => {
+          res.json({
+              code: 1,
+              message: '发送失败'
+          })
+    })
+})
+//TODO 获取赛事信息
+router.get('/getGameNewsList', (req, res, next) => {
+    GameNewsList
+    .all()
+    .then((list) => {
+        res.json({
+          code: 0,
+          gameNewsList: list
+        })
+    })
+    .catch(() => {
+        res.json({
+          code: 1
+        })
+    })
 })
 module.exports = router
